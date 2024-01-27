@@ -4,7 +4,7 @@ import Movie from "./Components/Movie/Movie";
 
 export default function Home() {
   return (
-    <div className={`h-full w-full`}>
+    <div className={`h-full w-full px-10`}>
       <Header />
       <Movie />
       <Footer />
