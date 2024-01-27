@@ -1,7 +1,21 @@
+import { useState } from "react";
+import { MovieContext, ThemeContext } from "./Context";
 import Home from "./Home";
 
-export default function App(){
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+export default function App() {
+  const [cartData, setCartData] = useState([]);
+  const [darkMode, setDarkMode] = useState(true);
   return (
-    <Home/>
-  )
+    <>
+      <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
+        <MovieContext.Provider value={{ cartData, setCartData }}>
+          <Home />
+          <ToastContainer />
+        </MovieContext.Provider>
+      </ThemeContext.Provider>
+    </>
+  );
 }
