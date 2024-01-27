@@ -5,9 +5,9 @@ import Movie from "./Components/Movie/Movie";
 import { ThemeContext } from "./Context";
 
 export default function Home() {
-  const {darkMode,setDarkMode}=useContext(ThemeContext)
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   return (
-    <div className={`h-full w-full px-10 ${darkMode?"dark":""}`}>
+    <div className={`h-full w-full px-10 ${darkMode ? "dark" : ""}`}>
       <Header />
       <Movie />
       <Footer />

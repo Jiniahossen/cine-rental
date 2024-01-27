@@ -5,11 +5,15 @@ import { MovieContext, ThemeContext } from "../../Context";
 export default function Header() {
   const [showCart, setShowCart] = useState(false);
   const { darkMode, setDarkMode } = useContext(ThemeContext);
-  const { cartData } = useContext(MovieContext);
+  const { state } = useContext(MovieContext);
 
-  const handleCartSHow = () => {
-    setShowCart(true);
-  };
+  function handleCartShow() {
+    if(state.cartData.length > 0) {
+        setShowCart(true);
+    } else {
+        setShowCart(false);
+    }
+}
 
   return (
     <>
@@ -50,7 +54,7 @@ export default function Header() {
               <a
                 className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
                 href="#"
-                onClick={handleCartSHow}
+                onClick={handleCartShow}
               >
                 <img
                   src="/Images/shopping-cart.svg"
@@ -58,9 +62,9 @@ export default function Header() {
                   height="24"
                   alt=""
                 />
-                {cartData.length > 0 && (
+                {state.cartData.length > 0 && (
                   <span className="rounded-full absolute top-[-12px] left-[28px] bg-[#12CF6F] text-white text-center p-[2px] w-[30px] h-[30px]">
-                    {cartData.length}
+                    {state.cartData.length}
                   </span>
                 )}
               </a>

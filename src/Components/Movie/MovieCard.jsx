@@ -2,43 +2,41 @@ import { useContext, useState } from "react";
 import MovieDetailsModal from "./MovieDetailsModal";
 import Rating from "./Ratings";
 import { MovieContext } from "../../Context";
-import { toast } from 'react-toastify';
-
+import { toast } from "react-toastify";
 
 export default function MovieCard({ movie }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const {cartData,setCartData}=useContext(MovieContext);
-  console.log(cartData);
+  const { state, dispatch } = useContext(MovieContext);
 
-
-  const hadleMovieSelection=(movie)=>{
+  const hadleMovieSelection = (movie) => {
     setSelectedMovie(movie);
     setShowModal(true);
-  }
+  };
 
   const handleModalClose = () => {
     setSelectedMovie(null);
     setShowModal(false);
   };
 
-  function handleAddToCart(event,movie){
+  function handleAddToCart(event, movie) {
+    event.stopPropagation();
 
-    event.stopPropagation()
-  
-    const found =cartData?.find((item) => {
-        return item.id === movie?.id;
+    const found = state.cartData?.find((item) => {
+      return item.id === movie?.id;
     });
 
-    if(!found){
-        toast.success('Movie added successfully!')
-        setCartData(
-            [...cartData,movie]
-        )
-
-    }
-    else{
-        toast.error(`The movie ${movie.title} already has been added`)
+    if (!found) {
+      toast.success("Movie added successfully!");
+      dispatch({
+        type: "add_to_cart",
+        payload: {
+          ...movie,
+        },
+      });
+      
+    } else {
+      toast.error(`The movie ${movie.title} already has been added`);
     }
   }
 
@@ -68,7 +66,7 @@ export default function MovieCard({ movie }) {
             <a
               className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
               href="#"
-              onClick={(e)=>handleAddToCart(e,movie)}
+              onClick={(e) => handleAddToCart(e, movie)}
             >
               <img src="./assets/tag.svg" alt="" />
               <span>${movie.price} | Add to Cart</span>
